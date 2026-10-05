@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caderneta Escolar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f1f5f9;--pan:#fff;--ink:#1e293b;--mut:#64748b;--ln:#e2e8f0;--hd:#0f3854;--ac:#0284c7;--ac2:#0369a1;--soft:#f8fafc;
+--g1:#eef6ff;--g2:#effaf3;--g3:#fff7e8;--g4:#f6efff;--g5:#fdeef0;--ok:#dcfce7;--okt:#166534;--bad:#fee2e2;--badt:#991b1b}
+:root[data-theme=dark]{--bg:#000;--pan:#000;--ink:#fff;--mut:#b3b3b3;--ln:#3d3d3d;--soft:#161616;--hd:#000;--g1:#0b1524;--g2:#0a1a12;--g3:#1a1405;--g4:#150e22;--g5:#2a1518;--ok:#14532d;--okt:#bbf7d0;--bad:#5b1d1d;--badt:#fecaca}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{height:100%;margin:0;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:13px/1.4 "Plus Jakarta Sans",system-ui,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--ln);background:var(--pan);border-radius:10px;padding:7px 12px;font-weight:600}
+button:hover{border-color:var(--ac)}
+.pr{background:var(--ac);border-color:var(--ac);color:#fff}.pr:hover{background:var(--ac2)}
+.gn{background:#059669;border-color:#059669;color:#fff}
+header{border-bottom:1px solid var(--ln);background:var(--hd);color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.lg{display:flex;gap:12px;align-items:center}.lg b{display:block;font-size:17px;font-weight:800}.lg span{font-size:12px;color:#bae6fd}
+.ic{width:40px;height:40px;border-radius:12px;background:var(--ac2);display:grid;place-items:center;font-size:20px}
+.stats{display:flex;gap:10px}
+.st{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:6px 14px}
+.st small{display:block;font-size:11px;color:#bae6fd}.st b{font-size:15px}
+.hb{display:flex;gap:8px}.hb button{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;font-size:12px}
+.hb .pr{background:var(--ac)}
+.bar{background:var(--pan);border-bottom:1px solid var(--ln);padding:10px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px;overflow-x:auto}
+.tabs button{border:0;background:none;color:var(--mut);padding:6px 12px;white-space:nowrap}
+.tabs button.on{background:var(--pan);color:var(--ac2);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.tl{display:flex;gap:8px;flex-wrap:wrap}
+#q{padding:7px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);width:170px}
+main{flex:1;min-height:0;padding:14px 18px 18px;display:flex;flex-direction:column}
+.card{flex:1;min-height:0;background:var(--pan);border:1px solid var(--ln);border-radius:14px;overflow:auto}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th,td{border-bottom:1px solid var(--ln);border-right:1px solid var(--ln);text-align:center;white-space:nowrap;min-width:78px;padding:0;height:34px}
+th{position:sticky;background:var(--soft);font-weight:700;color:var(--mut);padding:4px 8px;line-height:1.15;z-index:2}
+tr.h1 th{top:0;height:30px;background:var(--hd);color:#fff;font-size:12px}
+tr.h2 th{top:30px;box-shadow:0 1px 0 var(--ln)}
+th small{display:block;font-weight:500;font-size:10px}
+.hi{background:transparent;border:0;color:inherit;font:inherit;font-weight:inherit;text-align:center;padding:2px 4px;border-radius:6px;outline:none;min-width:40px;max-width:100%;box-sizing:border-box}
+.hi:hover{background:rgba(128,128,128,.18)}.hi:focus{outline:2px solid var(--ac);background:var(--pan);color:var(--ink)}
+.hi.mx{width:4ch;min-width:0;padding:0 2px}
+.tip{margin:0 0 8px;color:var(--mut);font-size:12px}
+.rn{min-width:38px;color:var(--mut);font-size:11px;background:var(--soft)}
+.nm{min-width:210px;text-align:left;position:sticky;left:38px;background:var(--pan);z-index:1}
+td.rn{position:sticky;left:0;z-index:1}
+th.nm,th.rn{z-index:4}
+tr.h1 th.nm,tr.h1 th.rn{background:var(--hd)}
+input.c{width:100%;height:34px;border:0;background:transparent;text-align:center;padding:0 8px;box-sizing:border-box;outline:none}
+input.c.n{text-align:left;padding-left:12px;font-weight:600}
+input.c:focus{outline:2px solid var(--ac);outline-offset:-2px;background:var(--pan)}
+.g1{background:var(--g1)}.g2{background:var(--g2)}.g3{background:var(--g3)}.g4{background:var(--g4)}.g5{background:var(--g5)}
+.cc{font-weight:700;padding:0 10px;background:var(--soft)}
+.cc.ok{background:var(--ok);color:var(--okt)}.cc.bad{background:var(--bad);color:var(--badt)}
+td.over input{background:var(--bad);color:var(--badt)}
+td.x{min-width:36px;border-right:0}td.x button{border:0;background:none;color:var(--mut);padding:0 10px}td.x button:hover{color:var(--badt)}
+footer{padding:10px 18px;text-align:center;color:var(--mut);font-size:12px;border-top:1px solid var(--ln);background:var(--pan)}
+footer b{color:var(--ink)}
+.turmas{display:flex;gap:6px;align-items:flex-end;padding:8px 18px 0;background:var(--pan);overflow-x:auto;border-bottom:1px solid var(--ln)}
+.tt{border:1px solid var(--ln);border-bottom:0;border-radius:10px 10px 0 0;background:var(--soft);color:var(--mut);padding:7px 14px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.tt.on{background:var(--ac);border-color:var(--ac);color:#fff;padding:3px 6px 3px 12px}
+.tt.nw{background:none;color:var(--ac)}
+.tn{background:transparent;border:0;color:#fff;font:inherit;font-weight:700;outline:none;min-width:6ch}
+.tt.on button{border:0;background:none;color:#fff;padding:3px 7px}
+[hidden]{display:none!important}
+.cs{font-size:12px;color:#bae6fd;align-self:center}
+.lgp{background:linear-gradient(135deg,#0f3854,#0284c7)!important;flex-direction:column;gap:14px}
+.lgc{max-width:400px!important;padding:30px!important;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.lgc .ic{margin:0 auto 12px;width:56px;height:56px;font-size:28px;color:#fff}
+.lgc h2{font-size:21px}.lgc label{text-align:left}.lgc .pr{width:100%;padding:10px;margin-top:6px}
+.pw{position:relative}.pw input{padding-right:48px}.pw button{position:absolute;right:3px;top:3px;border:0;background:none;padding:5px 9px}
+.lk{margin:14px 0 0;font-size:12px;line-height:2}.lk a{color:var(--ac);cursor:pointer;text-decoration:underline}
+.lgf{color:#bae6fd;font-size:12px}.lgf a{color:#fff;cursor:pointer;text-decoration:underline}
+.em{padding:50px;text-align:center;color:var(--mut)}
+.md{position:fixed;inset:0;background:rgba(15,23,42,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.md.on{display:flex}
+.bx{background:var(--pan);border-radius:16px;padding:22px;width:100%;max-width:560px;max-height:100%;overflow:auto}
+.bx h2{margin:0 0 4px;font-size:17px}.bx p{margin:0 0 12px;color:var(--mut)}
+.bx label{display:block;font-weight:700;margin:12px 0 4px;font-size:12px}
+.bx input,.bx select,.bx textarea{width:100%;box-sizing:border-box;border:1px solid var(--ln);border-radius:10px;padding:8px 10px;background:var(--soft)}
+textarea{height:150px;resize:vertical}
+.rw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ac{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.pv{max-height:170px;overflow:auto;border:1px solid var(--ln);border-radius:10px;margin-top:10px}
+.pv table th,.pv table td{min-width:0;height:28px;padding:2px 8px;position:static;font-size:12px}
+.ck{display:flex!important;gap:8px;align-items:center;font-weight:500!important}.ck input{width:auto}
+@media(max-width:760px){.stats{display:none}#q{width:120px}}
+@media print{header,.bar,.turmas,td.x,th.x{display:none}body,main{height:auto;display:block}.card{overflow:visible}th{position:static}}
+@media(pointer:coarse){input.c,.lgc input,.bx input,.bx select{font-size:16px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="lg"><div class="ic">🎓</div><div><b>Caderneta Escolar</b><span>Notas por bimestre e cálculo automático de aprovação</span></div></div>
+ <div class="stats">
+  <div class="st"><small>Alunos</small><b id="s1">0</b></div>
+  <div class="st"><small>Média da turma</small><b id="s2">–</b></div>
+  <div class="st"><small>Na média</small><b id="s3">0</b></div>
+  <div class="st"><small>Em risco</small><b id="s4">0</b></div>
+ </div>
+ <div class="hb"><span id="cs" class="cs" hidden></span><button id="rf" title="Buscar dados novos" hidden>↻</button><button id="lo" hidden>Sair</button><button id="bk">💾 Salvar / Drive</button><button id="bs">⚙ Configurações</button><button id="bp" class="pr">🖨 Imprimir / PDF</button><button id="bt" title="Tema">🌙</button></div>
+</header>
+<div class="turmas" id="turmas"></div>
+<div class="bar">
+ <div class="tabs" id="tabs">
+  <button data-v="all" class="on">Planilha completa</button><button data-v="sum">Resumo</button>
+  <button data-v="1">1º Bimestre</button><button data-v="2">2º Bimestre</button><button data-v="3">3º Bimestre</button><button data-v="4">4º Bimestre</button>
+ </div>
+ <div class="tl"><input id="q" placeholder="Buscar aluno..." aria-label="Buscar aluno"><button id="ba" class="gn">+ Adicionar alunos</button><button id="br">Limpar notas</button></div>
+</div>
+<main><p class="tip">Dica: clique em qualquer título, em “máx” (pontos), no nome ou na nota para editar.</p><div class="card"><table id="t"></table></div></main>
+<footer>Feito por <b>Nicollas Carvalho</b> <a id="ld" hidden style="margin-left:10px;color:var(--ac);cursor:pointer">Ver tela de login</a></footer>
+
+<div class="md" id="m1"><div class="bx">
+ <h2>Adicionar alunos</h2><p>Cole a lista inteira (do Excel, Word ou Bloco de Notas). Cada linha vira um aluno; se houver colunas separadas por Tab ou “;”, elas viram as notas.</p>
+ <textarea id="bulk" placeholder="Ana Silva&#10;Bruno Costa&#10;Carla Dias"></textarea>
+ <div class="rw" style="grid-template-columns:1fr"><div><label for="bg">Colunas de nota vão para</label><select id="bg"><option value="1">1º Bimestre</option><option value="2">2º Bimestre</option><option value="3">3º Bimestre</option><option value="4">4º Bimestre</option></select></div></div>
+ <label class="ck"><input type="checkbox" id="rep"> Substituir a lista atual de alunos</label>
+ <div id="pv"></div>
+ <div class="ac"><button data-x>Cancelar</button><button class="pr" id="go">Adicionar</button></div>
+</div></div>
+
+<div class="md lgp" id="m5">
+ <div class="bx lgc">
+  <div class="ic">🎓</div><h2>Caderneta Escolar</h2><p id="lsub">Acesso dos professores</p>
+  <div id="lem"><label for="le">E-mail</label><input id="le" type="email" autocomplete="username" placeholder="professor@escola.com"></div>
+  <div id="lpw"><label for="lp" id="lpl">Senha</label><div class="pw"><input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"><button id="ls" type="button" title="Mostrar senha" aria-label="Mostrar senha">👁</button></div></div>
+  <div id="lq" hidden><label for="lp2">Repita a senha</label><input id="lp2" type="password" autocomplete="new-password" placeholder="Digite a senha de novo"></div>
+  <p id="lm" style="margin:10px 0 0;min-height:18px;color:var(--badt)"></p>
+  <button class="pr" id="li">Entrar</button>
+  <p class="lk"><a id="lt">Não tem conta? Criar conta</a><br><a id="lf">Esqueci minha senha</a></p>
+ </div>
+ <div class="lgf">Feito por Nicollas Carvalho · <a id="lv" hidden>← Voltar ao site</a></div>
+</div>
+
+<div class="md" id="m4"><div class="bx" style="max-width:380px"><h2 id="am">Confirmar?</h2><div class="ac"><button data-x>Cancelar</button><button class="pr" id="ay">Confirmar</button></div></div></div>
+
+<div class="md" id="m3"><div class="bx">
+ <h2>Salvar no Drive</h2><p>Baixe o backup com todas as turmas e salve na sua pasta do Google Drive (com o Drive para computador a pasta sincroniza sozinha). Para voltar os dados, restaure o arquivo — isso substitui o que está na tela.</p>
+ <div class="ac" style="justify-content:flex-start"><button class="pr" id="bd">⬇ Baixar backup</button><button id="br2">⬆ Restaurar backup</button><input type="file" id="fl" accept=".json,application/json" hidden></div>
+ <p id="bm" style="margin-top:12px"></p><div class="ac"><button data-x>Fechar</button></div>
+</div></div>
+
+<div class="md" id="m2"><div class="bx">
+ <h2>Configurações</h2><p>Regra usada nos cálculos.</p>
+ <label for="sp">Média mínima para aprovação</label><input id="sp" inputmode="decimal">
+ <label for="sr">Cálculo das recuperações</label><select id="sr"><option value="media">Média entre a média e a nota da recuperação</option><option value="maior">A maior entre a média e a nota da recuperação</option></select>
+ <p style="margin-top:10px">Os pontos máximos de cada coluna e os títulos se editam direto na tabela.</p>
+ <div class="ac"><button data-x>Cancelar</button><button class="pr" id="ss">Salvar</button></div>
+</div></div>
+
+<script>
+// ====== BANCO DE DADOS (Supabase) — preencha para ligar; vazio = só neste navegador ======
+const CFG={url:'https://mkvzgryjbsphbsyljxcg.supabase.co',key:'sb_publishable_5pQ9j77psmWKTFXr9m0Kyg_FVRhl0kc'};
+const cloud=!!(CFG.url&&CFG.key);
+const FL=[['a','Atividades'],['p','Projetos'],['m','Av. Mensal'],['b','Av. Bimestral']];
+const $=s=>document.querySelector(s), tb=$('#t'), KEY='caderneta-v2';
+const ls={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const blank=n=>norm({pass:6,rm:'media',mx:{a:2,p:2,m:3,b:3},lb:{},st:Array.from({length:n},(_,i)=>({id:i+1,name:'Nome '+(i+1),v:{}}))});
+const norm=d=>{d.mx=d.mx||{};const DF={a:2,p:2,m:3,b:3};
+ if(d.mx.a!==undefined){const o=d.mx;d.mx={};for(let g=1;g<=4;g++)FL.forEach(([f])=>d.mx[g+f]=o[f])}
+ for(let g=1;g<=4;g++)FL.forEach(([f])=>{if(d.mx[g+f]==null)d.mx[g+f]=DF[f]});
+ d.lb=d.lb||{};if(d.mx.R!=null&&d.mx.R3==null)d.mx.R3=d.mx.R;delete d.mx.R;['R1','R2','R3'].forEach(k=>{if(d.mx[k]==null)d.mx[k]=10});
+ d.rm=d.rm||'media';d.st=d.st||[];if(d.pass==null)d.pass=6;
+ d.st.forEach(s=>{s.v=s.v||{};if(s.v.R!=null&&s.v.R3==null)s.v.R3=s.v.R;delete s.v.R});return d};
+let W=ls.get(KEY);
+if(W&&W.st)W={cur:1,turmas:[{id:1,name:'Turma 1',d:W}]};
+if(!W||!W.turmas||!W.turmas.length)W={cur:1,turmas:[{id:1,name:'Turma 1',d:blank(31)}]};
+W.turmas.forEach(t=>norm(t.d));
+if(!W.turmas.some(t=>t.id==W.cur))W.cur=W.turmas[0].id;
+const cur=()=>W.turmas.find(t=>t.id==W.cur);
+let D=cur().d;
+let view='all',q='',uid=Date.now();
+const LB=(k,d)=>D.lb[k]!=null?D.lb[k]:d;
+const save=()=>{ls.set(KEY,W);sched()};
+const num=x=>{if(x==null||x==='')return null;const n=parseFloat(String(x).replace(',','.'));return isNaN(n)?null:n};
+const fmt=n=>n==null?'':(Math.trunc(Math.round(n*1e6)/1e4)/100).toLocaleString('pt-BR'); // sem arredondar: corta na 2ª casa
+const F2={minimumFractionDigits:2,maximumFractionDigits:2};
+const f2=n=>n==null?'':(Math.trunc(Math.round(n*1e6)/1e4)/100).toLocaleString('pt-BR',F2);
+const f2Up=n=>n==null?'':(Math.ceil(Math.round(n*1e6)/1e4)/100).toLocaleString('pt-BR',F2);
+const fmtUp=n=>n==null?'':(Math.ceil(Math.round(n*1e6)/1e4)/100).toLocaleString('pt-BR'); // quanto falta: sempre para cima
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rd=x=>Math.round(x*1e6)/1e6;
+const mxg=g=>g=='all'?[1,2,3,4].reduce((s,x)=>s+mxg(x),0):FL.reduce((s,[f])=>s+(num(D.mx[g+f])||0),0);
+const inp=g=>FL.map(([f,l])=>({t:'i',g,id:g+f,k:g+f,l}));
+const T=g=>({t:'T',g,k:'T'+g,l:'Total do '+g+'º bim.'});
+const A={t:'A',g:0,k:'A',l:'Total do ano'};
+const REC1=[{t:'i',g:5,id:'R1',k:'R1',l:'Rec. 1º semestre'},{t:'N',g:5,k:'N1',l:'Média 1º sem.'}];
+const REC2=[{t:'i',g:6,id:'R2',k:'R2',l:'Rec. 2º semestre'},{t:'N',g:6,k:'N2',l:'Média 2º sem.'}];
+const FIN=[{t:'N',g:7,k:'MA',l:'Média anual'},{t:'N',g:7,k:'NR',l:'Precisa na rec. final'},{t:'i',g:7,id:'R3',k:'R3',l:'Rec. final'},{t:'N',g:7,k:'NM',l:'Nova média'}];
+const nova=(a,r)=>rd(Math.max(a,D.rm=='maior'?r:(a+r)/2));
+function cols(){
+ if(view=='sum')return[T(1),T(2),T(3),T(4),A,{t:'M',g:0,k:'M',l:'Média'},{t:'F',g:0,u:4,k:'F4',l:'Quanto falta para passar'},...REC1,...REC2,...FIN,{t:'S',g:0,k:'S',l:'Situação'}];
+ if(view!='all'){const g=+view;return[...inp(g),T(g),...(g==2?REC1:g==4?REC2:[])]}
+ return[...inp(1),T(1),...inp(2),T(2),{t:'M',g:0,k:'M',l:'Média'},{t:'F',g:0,u:2,k:'F2',l:'Quanto falta para passar'},...REC1,...inp(3),T(3),{t:'F',g:0,u:3,k:'F3',l:'Quanto falta para passar'},...inp(4),T(4),A,...REC2,...FIN];
+}
+function calc(s){const t={},tn={};let sum=0,n=0,raw=0;
+ for(let g=1;g<=4;g++){let any=false,x=0;FL.forEach(([f])=>{const v=num(s.v[g+f]);if(v!=null){any=true;x+=v}});const mg=mxg(g);t[g]=any?rd(x):null;tn[g]=any?rd(Math.min(10,mg>0?x*10/mg:x)):null;if(any){sum=rd(sum+tn[g]);raw=rd(raw+t[g]);n++}}
+ const avg=n?rd(sum/n):null,r1=num(s.v.R1),r2=num(s.v.R2),rec=num(s.v.R3);
+ const sem=(a,b,r)=>tn[a]!=null&&tn[b]!=null?(r!=null?nova(rd((tn[a]+tn[b])/2),r):rd((tn[a]+tn[b])/2)):null;
+ const s1=sem(1,2,r1),s2=sem(3,4,r2),fa=s1!=null&&s2!=null?rd((s1+s2)/2):null,nm=fa!=null&&rec!=null?nova(fa,rec):null;
+ return{t,tn,raw,sum,n,avg,s1,s2,fa,rec,nm}}
+function render(){
+ const C=cols();let g1='<tr class="h1"><th class="rn"></th><th class="nm">Alunos</th>',i=0;
+ while(i<C.length){let j=i;while(j<C.length&&C[j].g==C[i].g)j++;
+  const gk='G'+C[i].g,gl=LB(gk,({5:'Rec. 1º semestre',6:'Rec. 2º semestre',7:'Recuperação final'})[C[i].g]||(C[i].g?C[i].g+'º Bimestre':'Resultado'));g1+=`<th colspan="${j-i}"><input class="hi" data-lb="${gk}" value="${esc(gl)}" aria-label="Título do grupo"></th>`;i=j}
+ g1+='<th class="x"></th></tr>';
+ const h2='<tr class="h2"><th class="rn">#</th><th class="nm">Nome do aluno</th>'+C.map(c=>{const l=LB(c.k,c.l);return `<th class="${c.t=='i'?'':'cc'}"><input class="hi" data-lb="${c.k}" value="${esc(l)}" style="width:${Math.max(8,l.length+2)}ch" aria-label="Título da coluna">${c.t=='i'?`<small>máx <input class="hi mx" data-mx="${c.id}" inputmode="decimal" value="${esc(fmt(num(D.mx[c.id])))}" aria-label="Pontos máximos"></small>`:(c.t=='T'||c.t=='A')?`<small>máx <span data-tm="${c.t=='A'?'all':c.g}"></span></small>`:''}</th>`}).join('')+'<th class="x"></th></tr>';
+ const L=D.st.map((s,i)=>[s,i]).filter(([s])=>s.name.toLowerCase().includes(q));
+ const rows=L.map(([s,i])=>`<tr data-id="${s.id}"><td class="rn">${i+1}</td><td class="nm"><input class="c n" data-k="name" value="${esc(s.name)}" aria-label="Nome"></td>`+
+  C.map(c=>c.t=='i'?`<td class="g${c.g}"><input class="c" data-k="${c.id}" inputmode="decimal" value="${fmt(num(s.v[c.id]))}"></td>`:`<td class="cc" data-c="${c.k}"></td>`).join('')+
+  `<td class="x"><button data-del="${s.id}" title="Remover aluno" aria-label="Remover aluno">×</button></td></tr>`).join('');
+ tb.innerHTML=`<thead>${g1}${h2}</thead><tbody>${rows||`<tr><td class="em" colspan="${C.length+3}">${D.st.length?'Nenhum aluno encontrado.':'Nenhum aluno ainda. Clique em “Adicionar alunos” para colar a lista da turma.'}</td></tr>`}</tbody>`;
+ upd();
+}
+function upd(){
+ const p=D.pass,p4=rd(p*4);
+ tb.querySelectorAll('[data-tm]').forEach(e=>e.textContent=fmt(mxg(e.dataset.tm)));
+ tb.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
+  const s=D.st.find(x=>x.id==tr.dataset.id),r=calc(s);
+  tr.querySelectorAll('input[data-k]').forEach(i=>{const k=i.dataset.k;if(k!='name'){const v=num(s.v[k]);const m=num(D.mx[k]);i.parentElement.classList.toggle('over',v!=null&&(v<0||(m!=null&&v>m)))}});
+  tr.querySelectorAll('[data-c]').forEach(td=>{const k=td.dataset.c;let tx='',cl='';
+   if(k[0]=='T'){const t=r.t[k[1]];tx=f2(t);if(t!=null)cl=t>=rd(p*mxg(+k[1])/10)?'ok':'bad'}
+   else if(k=='A'){tx=r.n?f2(r.raw):''}
+   else if(k=='M'){tx=f2(r.avg);if(r.avg!=null)cl=r.avg>=p?'ok':'bad'}
+   else if(k=='N1'||k=='N2'){const v=k=='N1'?r.s1:r.s2;tx=f2(v);if(v!=null)cl=v>=p?'ok':'bad'}
+   else if(k=='MA'){tx=f2(r.fa);if(r.fa!=null)cl=r.fa>=p?'ok':'bad'}
+   else if(k=='NM'){tx=f2(r.nm);if(r.nm!=null)cl=r.nm>=p?'ok':'bad'}
+   else if(k=='NR'){if(r.fa!=null&&r.fa<p){const need=D.rm=='maior'?p:rd(2*p-r.fa),mr=num(D.mx.R3);tx=mr!=null&&need>mr?'Impossível':f2Up(need);cl='bad'}else if(r.fa!=null){tx='Não precisa';cl='ok'}}
+   else if(k[0]=='F'){const u=+k[1];let a=0,all=true;for(let g=1;g<=u;g++){if(r.tn[g]==null)all=false;else a+=r.tn[g]}
+    if(all){const n=Math.max(0,rd(p4-a));tx=n?f2Up(n):'Aprovado';cl=n?'bad':'ok'}}
+      else if(k=='S'&&r.n){if(r.n==4){if(r.fa==null){tx=r.avg>=p?'Aprovado':'Em recuperação';cl=r.avg>=p?'ok':'bad'}else if(r.fa>=p){tx='Aprovado';cl='ok'}else if(r.nm==null){tx='Em recuperação';cl='bad'}else{tx=r.nm>=p?'Aprovado (rec.)':'Reprovado';cl=r.nm>=p?'ok':'bad'}}else if(r.sum>=p4){tx='Aprovado';cl='ok'}else{tx=r.avg>=p?'Em dia':'Em risco';cl=r.avg>=p?'ok':'bad'}}
+   td.textContent=tx;td.className='cc '+cl});
+ });
+ const av=D.st.map(calc).map(r=>r.avg).filter(a=>a!=null);
+ $('#s1').textContent=D.st.length;
+ $('#s2').textContent=av.length?f2(av.reduce((a,b)=>a+b,0)/av.length):'–';
+ $('#s3').textContent=av.filter(a=>a>=p).length;$('#s4').textContent=av.filter(a=>a<p).length;
+}
+function setV(tr,i){const s=D.st.find(x=>x.id==tr.dataset.id),k=i.dataset.k;if(k=='name')s.name=i.value;else s.v[k]=i.value}
+tb.addEventListener('input',e=>{const d=e.target.dataset;
+ if(d.k){setV(e.target.closest('tr'),e.target);upd();save()}
+ else if(d.lb){D.lb[d.lb]=e.target.value;save()}
+ else if(d.mx){D.mx[d.mx]=e.target.value;upd();save()}});
+tb.addEventListener('paste',e=>{
+ const i=e.target;if(i.tagName!='INPUT'||!i.dataset.k)return;
+ const tx=(e.clipboardData||window.clipboardData).getData('text').replace(/\r/g,'').replace(/\n+$/,'');
+ if(!/[\t\n]/.test(tx))return;e.preventDefault();
+ const trs=[...tb.querySelectorAll('tbody tr[data-id]')],r0=trs.indexOf(i.closest('tr')),c0=[...i.closest('tr').querySelectorAll('input.c')].indexOf(i);
+ tx.split('\n').forEach((ln,dr)=>{const tr=trs[r0+dr];if(!tr)return;const ins=tr.querySelectorAll('input.c');
+  ln.split('\t').forEach((v,dc)=>{const x=ins[c0+dc];if(x){x.value=v.trim();setV(tr,x)}})});
+ upd();save();
+});
+tb.addEventListener('keydown',e=>{
+ if(!['Enter','ArrowDown','ArrowUp'].includes(e.key)||e.target.tagName!='INPUT'||!e.target.dataset.k)return;
+ const td=e.target.parentElement,tr=td.parentElement,ix=[...tr.children].indexOf(td);
+ const nx=e.key=='ArrowUp'?tr.previousElementSibling:tr.nextElementSibling,t=nx&&nx.children[ix]&&nx.children[ix].querySelector('input');
+ if(t){e.preventDefault();t.focus();t.select()}
+});
+tb.addEventListener('click',e=>{const d=e.target.dataset.del;
+ if(d){const s=D.st.find(x=>x.id==d);ask('Remover '+s.name+'?',()=>{D.st=D.st.filter(x=>x.id!=d);save();render()})}});
+$('#tabs').addEventListener('click',e=>{const v=e.target.dataset.v;if(!v)return;view=v;
+ document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b==e.target));render()});
+$('#q').addEventListener('input',e=>{q=e.target.value.toLowerCase();render()});
+
+let askFn=null;const ask=(m,f)=>{$('#am').textContent=m;askFn=f;open('#m4')};
+const open=id=>$(id).classList.add('on'),shut=()=>document.querySelectorAll('.md:not(#m5)').forEach(m=>m.classList.remove('on'));
+document.querySelectorAll('[data-x]').forEach(b=>b.onclick=shut);
+document.querySelectorAll('.md').forEach(m=>m.addEventListener('click',e=>{if(e.target==m)shut()}));
+document.addEventListener('keydown',e=>{if(e.key=='Escape')shut()});
+
+function parse(){return $('#bulk').value.replace(/\r/g,'').split('\n').map(l=>l.split(/\t|;/).map(c=>c.trim()))
+ .filter(c=>c[0]).map(c=>{c[0]=c[0].replace(/^\d+\s*[.)-]\s+/,'');return c})}
+function prev(){const R=parse();
+ $('#pv').innerHTML=R.length?`<div class="pv"><table><tr><th>#</th><th>Aluno</th>${FL.map(f=>`<th>${f[1]}</th>`).join('')}</tr>`+
+  R.map((c,i)=>`<tr><td>${i+1}</td><td style="text-align:left">${esc(c[0])}</td>${FL.map((_,k)=>`<td>${esc(c[k+1]||'')}</td>`).join('')}</tr>`).join('')+`</table></div><p style="margin-top:6px">${R.length} aluno(s) encontrados.</p>`:'';
+ $('#go').textContent=R.length?'Adicionar '+R.length+' aluno(s)':'Adicionar'}
+$('#bulk').addEventListener('input',prev);
+$('#ba').onclick=()=>{$('#bulk').value='';prev();open('#m1');$('#bulk').focus()};
+$('#go').onclick=()=>{const R=parse();if(!R.length)return;const g=$('#bg').value;
+ if($('#rep').checked)D.st=[];
+ R.forEach(c=>{const v={};FL.forEach(([f],k)=>{if(c[k+1])v[g+f]=c[k+1]});D.st.push({id:++uid,name:c[0],v})});
+ $('#rep').checked=false;save();shut();render()};
+$('#ay').onclick=()=>{const f=askFn;shut();if(f)f()};
+$('#bs').onclick=()=>{$('#sp').value=fmt(D.pass);$('#sr').value=D.rm;open('#m2')};
+$('#ss').onclick=()=>{D.pass=num($('#sp').value)??6;D.rm=$('#sr').value;save();shut();render()};
+$('#br').onclick=()=>ask('Apagar todas as notas desta turma? Os nomes serão mantidos.',()=>{D.st.forEach(s=>s.v={});save();render()});
+$('#bp').onclick=()=>window.print();
+const th=t=>{document.documentElement.dataset.theme=t;$('#bt').textContent=t=='dark'?'☀':'🌙';ls.set('caderneta-tema',t)};
+$('#bt').onclick=()=>th(document.documentElement.dataset.theme=='dark'?'light':'dark');
+th(ls.get('caderneta-tema')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+function renderTurmas(){
+ $('#turmas').innerHTML=W.turmas.map(t=>t.id==W.cur?`<span class="tt on"><input class="tn" data-tn value="${esc(t.name)}" style="width:${Math.max(8,t.name.length+2)}ch" aria-label="Nome da turma" title="Clique para renomear"><button data-td title="Excluir turma">×</button></span>`:`<button class="tt" data-t="${t.id}">${esc(t.name)}</button>`).join('')+'<button class="tt nw" data-tnew>+ Nova turma</button>';
+}
+function setCur(id){W.cur=id;D=cur().d;q='';$('#q').value='';save();render();renderTurmas()}
+$('#turmas').addEventListener('click',e=>{const b=e.target,d=b.dataset;
+ if(d.t)setCur(+d.t);
+ else if(d.tnew!=null){const id=Date.now();W.turmas.push({id,name:'Turma '+(W.turmas.length+1),d:blank(0)});setCur(id)}
+ else if(d.td!=null&&W.turmas.length>1){
+  if(b.dataset.arm){gone.add(W.cur);saveSnap();W.turmas=W.turmas.filter(t=>t.id!=W.cur);setCur(W.turmas[0].id)}
+  else{b.dataset.arm=1;b.textContent='Excluir?';setTimeout(()=>{b.textContent='×';delete b.dataset.arm},3000)}}});
+$('#turmas').addEventListener('input',e=>{if(e.target.dataset.tn!=null){cur().name=e.target.value;save()}});
+$('#bk').onclick=()=>{$('#bm').textContent='';open('#m3')};
+$('#bd').onclick=async()=>{try{let d=null;try{d=await claude.use('downloads')}catch(_){}
+ const data=JSON.stringify(W),name='caderneta-escolar-backup.json';
+ if(d)await d.save({filename:name,data});
+ else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();a.remove()}$('#bm').textContent='Backup pronto. Agora salve o arquivo na sua pasta do Drive.'}
+ catch(e){$('#bm').textContent=e&&e.code=='declined'?'Download cancelado.':'Não foi possível baixar o backup aqui.'}};
+$('#br2').onclick=()=>$('#fl').click();
+$('#fl').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{let x=JSON.parse(r.result);if(x.st)x={cur:1,turmas:[{id:1,name:'Turma 1',d:x}]};if(!x.turmas||!x.turmas.length)throw 0;
+  x.turmas.forEach(t=>norm(t.d));W=x;if(!W.turmas.some(t=>t.id==W.cur))W.cur=W.turmas[0].id;D=cur().d;save();render();renderTurmas();$('#bm').textContent='Backup restaurado.'}
+  catch(_){$('#bm').textContent='Arquivo inválido.'}};r.readAsText(f);e.target.value=''};
+
+// ====== sincronização com o banco ======
+let SES=ls.get('caderneta-sess'),snap={},gone=new Set(),ft=null,busy=false,pending=false;
+const status=t=>{$('#cs').textContent=t};
+const sig=t=>{const x=JSON.stringify({name:t.name,d:t.d});let h=0;for(let i=0;i<x.length;i++)h=(Math.imul(31,h)+x.charCodeAt(i))|0;return h+':'+x.length};
+async function refresh(){try{const r=await fetch(CFG.url+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:SES.refresh_token})});
+ const j=await r.json();if(!r.ok||!j.access_token)return false;SES={access_token:j.access_token,refresh_token:j.refresh_token};ls.set('caderneta-sess',SES);return true}catch(e){return false}}
+async function api(path,opt={},retry=true){
+ const r=await fetch(CFG.url+path,{...opt,headers:{apikey:CFG.key,...(SES?{Authorization:'Bearer '+SES.access_token}:{}),'Content-Type':'application/json',...(opt.headers||{})}});
+ if(r.status==401&&retry&&SES&&await refresh())return api(path,opt,false);
+ if(!r.ok){const e=new Error(r.status);e.status=r.status;throw e}
+ return r.status==204?null:r.json().catch(()=>null)}
+function sched(){if(!cloud||!SES)return;pending=true;status('Salvando…');clearTimeout(ft);ft=setTimeout(flush,900)}
+async function flush(){
+ if(!cloud||!SES)return;if(busy){sched();return}busy=true;
+ try{for(const id of [...gone]){await api('/rest/v1/caderneta?id=eq.'+id,{method:'DELETE'});gone.delete(id);delete snap[id]}
+  const up=W.turmas.filter(t=>sig(t)!==snap[t.id]);
+  if(up.length){await api('/rest/v1/caderneta?on_conflict=user_id,id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(up.map(t=>({...(userId()?{user_id:userId()}:{}),id:t.id,name:t.name,d:t.d})))});up.forEach(t=>snap[t.id]=sig(t))}
+  saveSnap();pending=false;status('☁ Salvo')}
+ catch(e){if(e.status==401){needLogin()}else{status('⚠ Sem conexão — tentando de novo');ft=setTimeout(flush,8000)}}
+ busy=false}
+async function pull(){
+ status('Sincronizando…');
+ if(Object.keys(snap).length&&dirty()){clearTimeout(ft);await flush();if(dirty())return}
+ const rows=await api('/rest/v1/caderneta?select=id,name,d&order=id');
+ if(rows&&rows.length){W.turmas=rows.map(r=>({id:r.id,name:r.name,d:norm(r.d)}));if(!W.turmas.some(t=>t.id==W.cur))W.cur=W.turmas[0].id;D=cur().d;
+  snap={};W.turmas.forEach(t=>snap[t.id]=sig(t));saveSnap();ls.set(KEY,W);render();renderTurmas();status('☁ Sincronizado')}
+ else{snap={};await flush()}}
+function needLogin(){SES=null;ls.set('caderneta-sess',null);setMode('in');open('#m5')}
+async function start(){
+ if(!SES){needLogin();return}
+ try{await pull()}catch(e){if(e.status==401)needLogin();else status('⚠ Sem conexão — usando cópia deste aparelho')}}
+let mode='in',recTok=null;
+const userId=()=>{try{return JSON.parse(atob(SES.access_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub}catch(e){return null}};
+const saveSnap=()=>ls.set('caderneta-snap',{u:userId(),s:snap,g:[...gone]});
+const dirty=()=>gone.size>0||W.turmas.some(t=>sig(t)!==snap[t.id]);
+{const ps=ls.get('caderneta-snap');if(SES&&ps&&ps.u&&ps.u===userId()&&ps.s){snap=ps.s;(ps.g||[]).forEach(g=>gone.add(g))}}
+const call=async(path,method,body,tok)=>{const r=await fetch(CFG.url+path,{method,headers:{apikey:CFG.key,'Content-Type':'application/json',...(tok?{Authorization:'Bearer '+tok}:{})},body:JSON.stringify(body)});let j=null;try{j=await r.json()}catch(e){}return{ok:r.ok,s:r.status,j:j||{}}};
+const RT=/^https?:/.test(location.origin)?'?redirect_to='+encodeURIComponent(location.origin+location.pathname):'';
+function setMode(m){mode=m;$('#lm').textContent='';
+ const T={in:['Acesso dos professores','Entrar','Não tem conta? Criar conta'],up:['Crie sua conta de professor','Criar conta','Já tenho conta — Entrar'],fg:['Digite seu e-mail para receber o link','Enviar link','Voltar para entrar'],rec:['Escolha uma nova senha','Salvar nova senha','']}[m];
+ $('#lsub').textContent=T[0];$('#li').textContent=T[1];$('#lt').textContent=T[2];
+ $('#lem').hidden=m=='rec';$('#lpw').hidden=m=='fg';$('#lq').hidden=!(m=='up'||m=='rec');
+ $('#lt').hidden=m=='rec';$('#lf').hidden=m!='in';$('#lpl').textContent=m=='rec'?'Nova senha':'Senha';
+ $('#lp').autocomplete=m=='in'?'current-password':'new-password'}
+async function go(){
+ if(!cloud){$('#lm').textContent='Demonstração: o banco ainda não foi configurado.';return}
+ const m=$('#lm'),em=$('#le').value.trim().toLowerCase(),pw=$('#lp').value;m.style.color='var(--badt)';
+ try{
+  if(mode!='rec'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){m.textContent=em?'Confira o e-mail: parece incompleto (ex.: nome@gmail.com).':'Digite seu e-mail.';return}
+  if(mode=='fg'){const r=await call('/auth/v1/recover'+RT,'POST',{email:em});
+   if(r.s==429||/rate/i.test(r.j.error_code||r.j.msg||'')){m.textContent='Muitos pedidos de e-mail. Espere alguns minutos e tente de novo.';return}
+   m.style.color='var(--okt)';m.textContent='Se o e-mail tiver conta, enviamos um link. Veja a caixa de entrada e o spam.';return}
+  if(mode!='in'&&pw.length<6){m.textContent='A senha precisa ter pelo menos 6 caracteres.';return}
+  if((mode=='up'||mode=='rec')&&pw!=$('#lp2').value){m.textContent='As senhas não são iguais.';return}
+  m.textContent='Aguarde…';
+  if(mode=='rec'){const r=await call('/auth/v1/user','PUT',{password:pw},recTok.access_token);
+   if(!r.ok){m.textContent='O link expirou. Peça um novo em “Esqueci minha senha”.';return}
+   return enter(recTok)}
+  if(mode=='up'){const r=await call('/auth/v1/signup'+RT,'POST',{email:em,password:pw});
+   if(!r.ok){const z=(r.j.error_code||'')+(r.j.msg||r.j.message||'');m.textContent=/already|exists/i.test(z)?'Este e-mail já tem conta. Toque em “Já tenho conta”.':/rate/i.test(z)?'Muitos pedidos. Espere alguns minutos.':'Não foi possível criar a conta. Confira o e-mail e a senha.';return}
+   if(r.j.access_token)return enter(r.j);
+   m.style.color='var(--okt)';m.textContent='Conta criada! Enviamos um e-mail de confirmação. Abra-o, confirme e depois entre.';return}
+  const r=await call('/auth/v1/token?grant_type=password','POST',{email:em,password:pw});
+  if(!r.ok||!r.j.access_token){m.textContent=r.j.error_code=='email_not_confirmed'?'Confirme seu e-mail primeiro (veja a caixa de entrada e o spam).':'E-mail ou senha incorretos.';return}
+  enter(r.j)
+ }catch(e){m.textContent='Sem conexão. Tente de novo.'}}
+async function enter(j){
+ SES={access_token:j.access_token,refresh_token:j.refresh_token};ls.set('caderneta-sess',SES);
+ const u=userId(),su=ls.get('caderneta-uid');
+ if(su&&su!==u){W={cur:1,turmas:[{id:1,name:'Turma 1',d:blank(31)}]};D=cur().d;snap={};gone.clear();ls.set('caderneta-snap',null);ls.set(KEY,W);render();renderTurmas()}
+ ls.set('caderneta-uid',u);
+ $('#m5').classList.remove('on');$('#lp').value='';$('#lp2').value='';setMode('in');
+ try{await pull()}catch(e){status('⚠ Não foi possível sincronizar')}}
+$('#lt').onclick=()=>setMode(mode=='in'?'up':'in');$('#lf').onclick=()=>setMode('fg');
+$('#ls').onclick=()=>{const p=$('#lp'),v=p.type=='password';p.type=v?'text':'password';$('#ls').textContent=v?'🙈':'👁'};
+$('#li').onclick=go;
+['#le','#lp','#lp2'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key=='Enter')go()}));
+if(cloud){
+ ['#cs','#rf','#lo'].forEach(i=>$(i).hidden=false);
+  $('#rf').onclick=async()=>{clearTimeout(ft);await flush();try{await pull()}catch(e){if(e.status==401)needLogin();else status('⚠ Sem conexão')}};
+ $('#lo').onclick=async()=>{clearTimeout(ft);await flush();if(dirty()){status('⚠ Há alterações sem salvar. Conecte-se à internet antes de sair.');return}
+  ls.set(KEY,null);ls.set('caderneta-sess',null);ls.set('caderneta-snap',null);location.reload()};
+ setInterval(()=>{if(!pending&&!busy&&SES&&!(document.activeElement&&document.activeElement.tagName=='INPUT'))pull().catch(()=>{})},60000);
+ render();renderTurmas();
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&SES&&dirty()){clearTimeout(ft);flush()}});
+ const h=new URLSearchParams(location.hash.slice(1));
+ if(h.get('error_code')){history.replaceState(null,'',location.pathname);setMode('fg');open('#m5');$('#lm').style.color='var(--badt)';$('#lm').textContent='Esse link expirou ou já foi usado. Digite seu e-mail para receber um novo.'}
+ else if(h.get('type')=='recovery'&&h.get('access_token')){recTok={access_token:h.get('access_token'),refresh_token:h.get('refresh_token')};history.replaceState(null,'',location.pathname);setMode('rec');open('#m5')}else start();
+}else{render();renderTurmas();
+ $('#ld').hidden=false;$('#ld').onclick=()=>{$('#lv').hidden=false;open('#m5')};$('#lv').onclick=()=>{$('#lv').hidden=true;$('#lm').textContent='';$('#m5').classList.remove('on')}}
+</script>
+</body>
+</html>
